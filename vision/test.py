@@ -1,5 +1,5 @@
 from Camera import Camera
-c = Camera("123", "82.65.5.211:8082")
+c = Camera("123", "178.15.51.243:80")
 from Viewer import Viewer
-v = Viewer(c, "asd", "asd")
-v.run()
+v = Viewer(c)
+print(v.createObservation())
