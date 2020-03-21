@@ -12,6 +12,7 @@ class Viewer:
         try:
             self.vc = cv2.VideoCapture("http://" + camera.ip + "/mjpg/video.mjpg")
         except(Exception) as error:
+            self.vc = None
             print(error)
         self.camera = camera
 
@@ -28,9 +29,10 @@ class Viewer:
         return len(pick)
 
     def createObservation(self):
-        if(not self.vc):
-            return None
-        frame = imutils.resize(self._captureFrame(), width=800)
-        val, _w = self._countPeople(frame)
-        #self._writeAndClose(val)
-        return Observation(uuid.uuid4(), self.camera.id, val, datetime.datetime.now())
+        frame = self._captureFrame()
+        if(frame is not None):
+            frame = imutils.resize(frame, width=800)
+            val = self._countPeople(frame)
+            #self._writeAndClose(val)
+            return Observation(uuid.uuid4(), self.camera.id, val, datetime.datetime.now())
+        return None
