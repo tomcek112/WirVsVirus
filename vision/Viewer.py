@@ -34,5 +34,5 @@ class Viewer:
             frame = imutils.resize(frame, width=800)
             val = self._countPeople(frame)
             #self._writeAndClose(val)
-            return Observation(uuid.uuid4(), self.camera.id, val, datetime.datetime.now())
+            return Observation(str(uuid.uuid4()), self.camera.id, val, datetime.datetime.now())
         return None

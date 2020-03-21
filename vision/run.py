@@ -7,12 +7,12 @@ from Camera import Camera
 from Viewer import Viewer
 
 # DB
-#url = urlparse.urlparse(os.environ['DATABASE_URL'])
-#dbname = url.path[1:]
-#user = url.username
-#password = url.password
-#host = url.hostname
-#port = url.port
+url = urlparse.urlparse(os.environ['DATABASE_URL'])
+dbname = url.path[1:]
+user = url.username
+password = url.password
+host = url.hostname
+port = url.port
 
 con = psycopg2.connect(
             dbname=dbname,
@@ -31,26 +31,22 @@ for row in cur.fetchall():
     cameras.append(Camera(row[0], row[1]))
 
 cur.close()
-con.close()
 
 # main observe loop
 while(True):
     observations = []
-    for camera in cameras[:3]:
+    for camera in cameras:
         v = Viewer(camera)
         o = v.createObservation()
         if (o is not None):
             observations.append(o)
 
-    sql = "INSERT INTO observations (id, camera_id, count) VALUES "
+    sql = "INSERT INTO observations (id, camera_id, date, count) VALUES (%s, %s, %s, %s)"
+    sql_vals = []
     for observation in observations:
-        sql += "('%s', '%s', '%s'), " %(observation.id, observation.cameraId, observation.count)
+        sql_vals.append((observation.id, observation.cameraId, observation.date, observation.count))
 
-    sql = sql[:-2]
-    
     cur2 = con.cursor()
-    cur2.execute(sql)
+    cur2.executemany(sql, sql_vals)
     con.commit()
-    cur2.close()
-    con.close()
     time.sleep(120)
