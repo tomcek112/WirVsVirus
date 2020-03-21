@@ -1,6 +1,6 @@
 import time
 import os
-#import urllib.parse as urlparse
+import urllib.parse as urlparse
 import psycopg2
 
 from Camera import Camera
