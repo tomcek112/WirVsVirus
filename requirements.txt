@@ -1,2 +1,6 @@
 Flask==0.12
 gunicorn==19.10.0
+numpy==1.15.4    
+opencv-python-headless==4.2.0.32
+psycopg2==2.7.3.2
+imutils==0.5.3
