@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 import os
-#import urllib.parse as urlparse
+import urllib.parse as urlparse
 import psycopg2
 
 app = Flask(__name__, static_url_path='/static')
