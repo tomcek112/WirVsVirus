@@ -49,4 +49,4 @@ while(True):
     cur2 = con.cursor()
     cur2.executemany(sql, sql_vals)
     con.commit()
-    time.sleep(120)
+    time.sleep(1800)
