@@ -47,6 +47,43 @@ def observations():
     con.close()
     return jsonify({'observations': obs})
 
+@app.route('/restrictions', methods=['GET'])
+def restrictions():
+    con = _getDbConnection()
+    cur = con.cursor()
+    if request.args:
+        args = request.args
+        state = args["state"]
+        sql = "SELECT * FROM warnings WHERE region=(%s)"
+        cur.execute(sql, (state, ))
+        result = cur.fetchall()[0];
+        cur.close()
+        con.close()
+        return jsonify({
+            'region': result[0],
+            'cases': result[1],
+            'deaths': result[4],
+            'per100k': result[5],
+            'level': result[2],
+            'start': result[3]
+        })
+    else:
+        cur.execute("SELECT * FROM warnings")
+        results = cur.fetchall()
+        cur.close()
+        con.close()
+        all_regions = []
+        for result in results:
+            all_regions.append({
+                'region': result[0],
+                'cases': result[1],
+                'deaths': result[4],
+                'per100k': result[5],
+                'level': result[2],
+                'start': result[3]
+            })
+        return jsonify(all_regions)
+
 def _getDbConnection():
     url = urlparse.urlparse(os.environ['DATABASE_URL'])
     dbname = url.path[1:]
