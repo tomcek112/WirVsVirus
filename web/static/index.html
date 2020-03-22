@@ -1,20 +1,63 @@
 <!DOCTYPE html>
 <html>
     <head>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
         <style>
             #map {
                 height: 100%;
             }
+            .menu {
+                position: absolute;
+                top: 24px;
+                right: 24px;
+                width: 200px;
+                background-color: white;
+                padding: 24px;
+                padding-top: 0;
+                box-shadow: 0px 1px 5px #989898;
+            }
+
+            .menu input, select {
+                float: right;
+            }
+
             html, body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                font-family: 'Open Sans', sans-serif;
             }
         </style>
     </head>
     <body>
         <div id="map"></div>
+        <div class="menu">
+            <p>Show activity</p>
+            <div>
+                <label for="start">from:</label>
+
+                <input type="date" id="start"
+                    value="2020-03-20">
+            </div>
+            <br>
+            <div>
+                <label for="end">to:</label>
+
+                <input type="date" id="end"
+                    value="2020-03-22">
+            </div>
+            <div style="margin-top: 16px;">
+                <label for="compare">Compare to:</label>
+                <select id="compare" style="margin-top: 3px;">
+                    <option value="last-day">Last Day</option>
+                    <option value="last-three-days">Last 3 Days</option>
+                    <option value="last-week">Last Week</option>
+                    <option value="last-month">Last Month</option>
+                </select>
+            </div>
+
+        </div>
         <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
         <script src="/static/app.js"></script>
 

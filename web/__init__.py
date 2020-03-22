@@ -17,8 +17,8 @@ def observations():
     cur = con.cursor()
     if request.args:
         args = request.args
-        date_from = time.ctime(args["from"])
-        date_to = time.ctime(args["to"])
+        date_from = time.ctime(float(args["from"]))
+        date_to = time.ctime(float(args["to"]))
         cur.execute("""
         SELECT observations.id, observations.camera_id, observations.count, observations.date, cameras.long, cameras.lat
         FROM observations
